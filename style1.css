@@ -1,0 +1,57 @@
+.Pictures {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 40px auto;
+    /* Remove width/height to allow natural image size */
+}
+
+.Pictures img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+    /* No width/height, image stays normal size */
+    z-index: 1;
+}
+
+.Pictures img.active {
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 2;
+}
+
+.Pictures img.slide-left {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.Pictures img.slide-right {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    font-size: 2rem;
+    padding: 0.5em 0.8em;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    user-select: none;
+}
+
+.arrow.left {
+    left: -50px;
+}
+
+.arrow.right {
+    right: -50px;
+}

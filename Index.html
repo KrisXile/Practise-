@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flower Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Arial:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', 'Playfair Display', serif;
+      background: url('background.png.png') center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      color: #7b2234;
+    }
+    .Logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 32px;
+    }
+    .Logo img {
+      width: 200px;
+      height: auto;
+      border-radius: 50%;
+      box-shadow: 0 4px 24px #ffb6d5a0;
+      border: 4px solid #ffe4ec;
+      background: #ffffff80;
+    }
+    .navbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+      background: rgba(255, 182, 213, 0.15);
+      padding: 12px 0;
+      border-radius: 30px;
+      box-shadow: 0 2px 12px #ffd6e0a0;
+    }
+    .navbar a {
+      text-decoration: none;
+    }
+    .fancy-pink-btn {
+      font-family: 'Arial', 'Playfair Display', serif;
+      background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+      color: #7b2234;
+      border: none;
+      border-radius: 18px;
+      padding: 8px 22px;
+      margin: 0 4px;
+      font-size: 1rem;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(153, 101, 109, 0.18);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 2px #e4b1c2;
+    }
+    .fancy-pink-btn:hover {
+      background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+      transform: translateY(-2px) scale(1.05);
+    }
+    .icon-btn {
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(90deg, #ffb6d5 0%, #f9abd2 100%);
+      box-shadow: 0 4px 16px rgba(255, 105, 180, 0.25), 0 1.5px 6px #e4b1c2;
+      border-radius: 50px;
+      margin-left: 8px;
+      transition: background 0.3s, box-shadow 0.2s, transform 0.2s;
+    }
+    .icon-btn:hover {
+      background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+      box-shadow: 0 6px 24px rgba(255, 105, 180, 0.35), 0 2px 8px #e4b1c2;
+      transform: translateY(-2px) scale(1.08);
+    }
+    .icon-img {
+      width: 24px;
+      height: 24px;
+      filter: invert(0%) sepia(0%) saturate(1200%) hue-rotate(-20deg) brightness(0.85) drop-shadow(0 2px 6px #ffb6d5);
+      transition: filter 0.2s;
+    }
+    .icon-btn-group {
+      display: flex;
+      gap: 10px;
+      position: absolute;
+      top: 32px;
+      right: 40px;
+      z-index: 11;
+    }
+    .welcome-card {
+      max-width: 600px;
+      margin: 48px auto 32px auto;
+      background: rgba(255, 228, 236, 0.95);
+      border-radius: 50px;
+      box-shadow: 0 4px 32px #ffd6e0a0;
+      padding: 36px 32px 28px 32px;
+      text-align: center;
+    }
+    .welcome-card h1 {
+      font-family: 'Playfair Display', 'Arial', serif;
+      font-size: 2.5rem;
+      margin-bottom: 5px;
+      color: #d72660;
+      letter-spacing: 2px;
+    }
+    .subtitle {
+      font-size: 1.2rem;
+      color: #7b2234;
+      margin-bottom: 18px;
+      font-style: italic;
+    }
+    .description p {
+      font-size: 1.1rem;
+      color: #7b2234;
+    }
+    .bouquet-1, .bouquet-2, .bouquet-3, .bouquet-4 {
+      background: rgba(255, 246, 250, 0.95);
+      border-radius: 24px;
+      box-shadow: 0 2px 16px #ffd6e0a0;
+      max-width: 500px;
+      margin: 32px auto;
+      padding: 28px 24px 20px 24px;
+      text-align: center;
+    }
+    .bouquet-1 h2, .bouquet-2 h2, .bouquet-3 h2, .bouquet-4 h2 {
+      font-family: 'Playfair Display', 'Arial', serif;
+      color: #d72660;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .bouquet-1 img, .bouquet-2 img, .bouquet-3 img, .bouquet-4 img {
+      border-radius: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 12px #ffb6d5a0;
+    }
+    .bouquet-1 p, .bouquet-2 p, .bouquet-3 p, .bouquet-4 p {
+      color: #7b2234;
+      font-size: 1rem;
+      margin: 6px 0;
+    }
+    .footer {
+      background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+      color: #7b2234;
+      text-align: center;
+      padding: 32px 10px 18px 10px;
+      border-top-left-radius: 32px;
+      border-top-right-radius: 32px;
+      box-shadow: 0 -2px 16px #be849214;
+      margin-top: 48px;
+    }
+    .footer-content a {
+      color: #d72660;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 6px;
+    }
+    .footer-content a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 700px) {
+      .welcome-card, .bouquet-1, .bouquet-2, .bouquet-3, .bouquet-4 {
+        max-width: 95vw;
+        padding: 18px 6vw;
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px 0;
+      }
+      .icon-btn-group {
+        position: static;
+        justify-content: center;
+        margin: 12px 0;
+      }
+    }
+    .shopping {
+      display: flex;
+      justify-content: center;
+      margin-top: 24px;
+    }
+    .shopping button {
+      background: linear-gradient(90deg, #ffb6d5 0%, #f9abd2 100%);
+      color: #7b2234;
+      border: none;
+      border-radius: 18px;
+      padding: 12px 28px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(153, 101, 109, 0.671);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .shopping button:hover {
+      background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+      transform: translateY(-2px) scale(1.05);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="Logo">
+    <img src="MyPhoto_26_03_2025_4_58_51_pm.png" alt="Flower Shop Logo">
+  </div>
+
+  <nav class="navbar">
+    <a href="Index.html"><button class="fancy-pink-btn">Home</button></a>
+    <a href="Index About.html"><button class="fancy-pink-btn">About Us</button></a>
+    <a href="Index Contact us.html"><button class="fancy-pink-btn">Contact Us</button></a>
+    <a href="Available sales.html" style="position: relative; display: inline-block;">
+      <span class="hot-sticker">
+      <span class="flame" style="width:14px;height:16px;">
+        <span class="flame-inner" style="left:3px;top:3px;width:5px;height:7px;"></span>
+        <span class="flame-spark spark1"></span>
+        <span class="flame-spark spark2"></span>
+        <span class="flame-spark spark3"></span>
+      </span>
+      <span style="font-size:0.82em;">HOT</span>
+      </span>
+      <button class="fancy-pink-btn" style="font-size:0.92em;padding:6px 16px;">Hot Sales</button>
+        </a>
+        <style>
+      .hot-sticker {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(90deg, #ff3c00 60%, #ffb347 100%);
+        color: #fff;
+        font-size: 0.82rem;
+        font-weight: bold;
+        padding: 2px 10px 2px 7px;
+        border-radius: 14px 14px 14px 5px;
+        box-shadow: 0 2px 8px #ffb6d5a0, 0 0 4px #ffb34780;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        letter-spacing: 1.1px;
+        text-shadow: 0 1px 2px #d72660a0, 0 0 3px #fff7b2a0;
+        animation: hotBounce 1.2s infinite alternate;
+        filter: drop-shadow(0 1px 4px #ffb34780);
+      }
+      .hot-sticker .flame {
+        display: inline-block;
+        width: 14px;
+        height: 16px;
+        margin-right: 4px;
+        position: relative;
+        background: radial-gradient(circle at 60% 30%, #fff7b2 30%, #ffb347 60%, #ff3c00 100%);
+        border-radius: 50% 50% 60% 60% / 60% 60% 100% 100%;
+        animation: flameFlicker 0.7s infinite alternate;
+        box-shadow: 0 0 8px 2px #ffb34780, 0 0 4px #fffbe780;
+      }
+      .hot-sticker .flame-inner {
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        width: 5px;
+        height: 7px;
+        background: radial-gradient(circle at 50% 40%, #fffbe7 60%, #ffd700 100%);
+        border-radius: 50% 50% 60% 60% / 60% 60% 100% 100%;
+        opacity: 0.85;
+        filter: blur(0.5px);
+        animation: flameInnerFlicker 0.5s infinite alternate;
+      }
+      .hot-sticker .flame-spark {
+        position: absolute;
+        width: 2.5px;
+        height: 2.5px;
+        background: radial-gradient(circle, #fffbe7 60%, #ffd700 100%);
+        border-radius: 50%;
+        opacity: 0.7;
+        pointer-events: none;
+        animation: sparkMove 1.2s infinite linear;
+      }
+      .hot-sticker .spark1 {
+        left: 1.5px; top: -5px;
+        animation-delay: 0s;
+      }
+      .hot-sticker .spark2 {
+        left: 7px; top: -7px;
+        width: 2px; height: 2px;
+        opacity: 0.5;
+        animation-delay: 0.3s;
+      }
+      .hot-sticker .spark3 {
+        left: 5px; top: -9px;
+        width: 1.5px; height: 1.5px;
+        opacity: 0.4;
+        animation-delay: 0.6s;
+      }
+      @keyframes flameFlicker {
+        0% { transform: scaleY(1) scaleX(1) rotate(-3deg);}
+        50% { transform: scaleY(1.18) scaleX(0.93) rotate(4deg);}
+        100% { transform: scaleY(1) scaleX(1.07) rotate(-2deg);}
+      }
+      @keyframes flameInnerFlicker {
+        0% { opacity: 0.7; transform: scaleY(1);}
+        100% { opacity: 1; transform: scaleY(1.13);}
+      }
+      @keyframes sparkMove {
+        0% { opacity: 0.7; transform: translateY(0) scale(1);}
+        60% { opacity: 1; }
+        100% { opacity: 0; transform: translateY(-7px) scale(1.15);}
+      }
+      @keyframes hotBounce {
+        0% { transform: translateX(-50%) scale(1);}
+        100% { transform: translateX(-50%) scale(1.09);}
+      }
+        </style>
+    <span class="icon-btn-group">
+      <button class="fancy-pink-btn icon-btn">
+        <img src="bxs-cart.svg" alt="Cart Icon" class="icon-img">
+      </button>
+      <button class="fancy-pink-btn icon-btn">
+        <img src="bxs-user-circle.svg" alt="User Icon" class="icon-img">
+      </button>
+    </span>
+  </nav>
+
+  <div class="welcome-card">
+    <h1>Welcome to Flower Shop</h1>
+    <p class="subtitle">Where Every Bloom Tells a Story</p>
+    <div class="description">
+      <p>Discover the beauty of nature with our exquisite flower arrangements. 
+      From vibrant bouquets to elegant centerpieces, we have something for every occasion.</p>
+    </div>
+    
+    <div class="shopping">
+      <a href="Shopping.html">
+        <button class="fancy-pink-btn">Shop Now</button>
+      </a>
+    </div>
+
+  <div style="text-align: center;">
+    <h1 style="font-family: Arial, sans-serif;">Featured Bouquets</h1>
+    <p class="subtitle" style="font-family: Arial, sans-serif;">Handpicked Just for You</p>
+  </div>
+  <div class="bouquet-1">
+    <h2>Rose & Lily Bouquet</h2>
+    <img src="flower19.png" alt="Rose and Lily Bouquet" width="200">
+    <p><strong>Description:</strong> A stunning arrangement of fresh red roses and white lilies, beautifully wrapped for any special occasion.</p>
+    <p><strong>Meaning:</strong> Pink roses symbolize love and passion, while white lilies represent purity and commitment. This bouquet is perfect for expressing heartfelt emotions.</p>
+  </div>
+
+  <div class="bouquet-2">
+    <h2>Sunflower Delight Bouquet</h2>
+    <img src="flower40.png" alt="Sunflower Delight Bouquet" width="200">
+    <p><strong>Description:</strong> Bright and cheerful sunflowers paired with delicate greenery, arranged to bring sunshine to anyone’s day.</p>
+    <p><strong>Meaning:</strong> Sunflowers symbolize adoration, loyalty, and longevity. This bouquet is ideal for celebrating friendship and happiness.</p>
+  </div>
+
+  <div class="bouquet-3">
+    <h2>Classic Red Rose Bouquet</h2>
+    <img src="flower21.png" alt="Classic Red Rose Bouquet" width="200">
+    <p><strong>Description:</strong> A timeless arrangement of fresh red roses, beautifully wrapped to express deep love and admiration.</p>
+    <p><strong>Meaning:</strong> Red roses symbolize love, passion, and respect. This bouquet is perfect for romantic occasions and heartfelt gestures.</p>
+  </div>
+
+  <div class="bouquet-4">
+    <h2>Lavender Bouquet</h2>
+    <img src="flower41.png" alt="Lavender Bouquet" width="200">
+    <p><strong>Description:</strong> Fragrant lavender stems elegantly arranged to bring calm and relaxation to any space.</p>
+    <p><strong>Meaning:</strong> Lavender symbolizes serenity, grace, and calmness. This bouquet is perfect for expressing peace and tranquility.</p>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024 Flower Shop. All rights reserved.</p>
+      <p>
+        <a href="Index About.html">About</a> |
+        <a href="Index Contact us.html">Contact Us</a> |
+        <a href="Available sales.html">Hot Sales</a>
+      </p>
+      <p>
+        Email: <a href="mailto:info@flowershop.com">info@flowershop.com</a> <br>
+        Contact: (123) 456-7890 <br>
+        Address: 123 Blossom Street, Bagasbas City
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

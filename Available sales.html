@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flower Shop - Hot Sales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Arial:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', 'Playfair Display', serif;
+            background: url('background.png.png') center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            color: #7b2234;
+        }
+        .Logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 32px;
+        }
+        .Logo img {
+            width: 200px;
+            height: auto;
+            border-radius: 50%;
+            box-shadow: 0 4px 24px #ffb6d5a0;
+            border: 4px solid #ffe4ec;
+            background: #ffffff80;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 24px;
+            background: rgba(255, 182, 213, 0.15);
+            padding: 12px 0;
+            border-radius: 30px;
+            box-shadow: 0 2px 12px #ffd6e0a0;
+        }
+        .navbar a {
+            text-decoration: none;
+        }
+        .fancy-pink-btn {
+            font-family: 'Arial', 'Playfair Display', serif;
+            background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+            color: #7b2234;
+            border: none;
+            border-radius: 18px;
+            padding: 8px 22px;
+            margin: 0 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(153, 101, 109, 0.18);
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 2px #e4b1c2;
+        }
+        .fancy-pink-btn:hover {
+            background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+            transform: translateY(-2px) scale(1.05);
+        }
+        .icon-btn {
+            padding: 6px 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #ffb6d5 0%, #f9abd2 100%);
+            box-shadow: 0 4px 16px rgba(255, 105, 180, 0.25), 0 1.5px 6px #e4b1c2;
+            border-radius: 50px;
+            margin-left: 8px;
+            transition: background 0.3s, box-shadow 0.2s, transform 0.2s;
+        }
+        .icon-btn:hover {
+            background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+            box-shadow: 0 6px 24px rgba(255, 105, 180, 0.35), 0 2px 8px #e4b1c2;
+            transform: translateY(-2px) scale(1.08);
+        }
+        .icon-img {
+            width: 24px;
+            height: 24px;
+            filter: invert(0%) sepia(0%) saturate(1200%) hue-rotate(-20deg) brightness(0.85) drop-shadow(0 2px 6px #ffb6d5);
+            transition: filter 0.2s;
+        }
+        .icon-btn-group {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            top: 32px;
+            right: 40px;
+            z-index: 11;
+        }
+        .hot-sales-title {
+            text-align: center;
+            font-family: 'Playfair Display', 'Arial', serif;
+            font-size: 2.5rem;
+            color: #d72660;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .hot-sales-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 32px;
+            margin: 0 auto 40px auto;
+            max-width: 1200px;
+        }
+        .hot-sale-card {
+            background: rgba(255, 228, 236, 0.97);
+            border-radius: 24px;
+            box-shadow: 0 4px 24px #ffd6e0a0;
+            width: 320px;
+            padding: 22px 18px 18px 18px;
+            text-align: center;
+            position: relative;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .hot-sale-card:hover {
+            box-shadow: 0 8px 32px #ffd6e0c0;
+            transform: translateY(-4px) scale(1.03);
+        }
+        .hot-sale-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 12px #ffd6e0a0;
+        }
+        .hot-sale-name {
+            font-family: 'Playfair Display', 'Arial', serif;
+            font-size: 1.3rem;
+            color: #d72660;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+        .hot-sale-price {
+            color: #7b2234;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .hot-sale-sold {
+            color: #ff3c00;
+            font-size: 0.98rem;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+        .hot-sale-reviews {
+            color: #7b2234;
+            font-size: 0.97rem;
+            margin-bottom: 10px;
+        }
+        .hot-sale-actions {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .hot-sale-actions button,
+        .hot-sale-actions label {
+            font-size: 0.98em;
+            padding: 6px 14px;
+            border-radius: 14px;
+            border: none;
+            background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+            color: #7b2234;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #ffd6e0a0;
+            transition: background 0.2s, transform 0.2s;
+            margin: 0 2px;
+            text-shadow: 0 1px 2px #e4b1c2;
+        }
+        .hot-sale-actions button:hover,
+        .hot-sale-actions label:hover {
+            background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+            transform: scale(1.05);
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(255, 182, 213, 0.25);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal:target {
+            display: flex;
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: 24px;
+            max-width: 420px;
+            width: 95vw;
+            padding: 32px 24px 24px 24px;
+            box-shadow: 0 8px 32px #ffd6e0c0;
+            text-align: left;
+            position: relative;
+            color: #7b2234;
+            font-size: 1.08em;
+            animation: popIn 0.3s;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.8);}
+            100% { transform: scale(1);}
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 1.5em;
+            color: #d72660;
+            text-decoration: none;
+            font-weight: bold;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .modal-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 12px #ffd6e0a0;
+        }
+        .modal-title {
+            font-family: 'Playfair Display', 'Arial', serif;
+            font-size: 1.3rem;
+            color: #d72660;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+        .modal-section {
+            margin-bottom: 10px;
+        }
+        .modal-label {
+            font-weight: bold;
+            margin-right: 6px;
+        }
+        .modal-select, .modal-radio-group {
+            margin-bottom: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .modal-radio-group label {
+            background: #ffe4ec;
+            border-radius: 10px;
+            padding: 4px 12px;
+            cursor: pointer;
+            border: 1px solid #ffd6e0;
+            font-size: 0.98em;
+            margin-bottom: 2px;
+        }
+        .modal-radio-group input[type="radio"] {
+            margin-right: 4px;
+        }
+        .modal-payment {
+            margin-bottom: 12px;
+        }
+        .modal-btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+            justify-content: flex-end;
+        }
+        .modal-btn {
+            font-size: 1em;
+            padding: 7px 18px;
+            border-radius: 14px;
+            border: none;
+            background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+            color: #7b2234;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #ffd6e0a0;
+            transition: background 0.2s, transform 0.2s;
+            margin: 0 2px;
+            text-shadow: 0 1px 2px #e4b1c2;
+        }
+        .modal-btn:hover {
+            background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+            transform: scale(1.05);
+        }
+        /* Simulated popups for order/thank you */
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(255, 182, 213, 0.25);
+            justify-content: center;
+            align-items: center;
+        }
+        .popup:target {
+            display: flex;
+        }
+        .popup-content {
+            background: #fff;
+            border-radius: 18px;
+            max-width: 340px;
+            width: 90vw;
+            padding: 32px 18px 22px 18px;
+            box-shadow: 0 8px 32px #ffd6e0c0;
+            text-align: center;
+            color: #7b2234;
+            font-size: 1.1em;
+            animation: popIn 0.3s;
+        }
+        .popup-btn {
+            margin-top: 18px;
+            font-size: 1em;
+            padding: 7px 18px;
+            border-radius: 14px;
+            border: none;
+            background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+            color: #7b2234;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #ffd6e0a0;
+            transition: background 0.2s, transform 0.2s;
+            text-shadow: 0 1px 2px #e4b1c2;
+        }
+        .popup-btn:hover {
+            background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+            transform: scale(1.05);
+        }
+        /* Buyer testimonials */
+        .buyers-section {
+            max-width: 1200px;
+            margin: 48px auto 32px auto;
+            text-align: center;
+        }
+        .buyers-title {
+            font-family: 'Playfair Display', 'Arial', serif;
+            font-size: 2rem;
+            color: #d72660;
+            margin-bottom: 18px;
+            letter-spacing: 1.2px;
+        }
+        .buyers-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            justify-content: center;
+        }
+        .buyer-card {
+            background: #fff;
+            border-radius: 50px;
+            box-shadow: 0 2px 12px #ffd6e0a0;
+            width: 300px;
+            padding: 18px 12px 12px 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .buyer-img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px #ffd6e0a0;
+        }
+        .buyer-name {
+            font-weight: bold;
+            color: #d72660;
+            margin-bottom: 6px;
+            font-size: 1.08em;
+        }
+        .buyer-msg {
+            font-size: 0.98em;
+            color: #7b2234;
+        }
+        .footer {
+            background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+            color: #7b2234;
+            text-align: center;
+            padding: 32px 10px 18px 10px;
+            border-top-left-radius: 32px;
+            border-top-right-radius: 32px;
+            box-shadow: 0 -2px 16px #ffd6e0a0;
+            margin-top: 48px;
+        }
+        .footer-content a {
+            color: #d72660;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 6px;
+        }
+        .footer-content a:hover {
+            text-decoration: underline;
+        }
+        .social-icons {
+            display: flex;
+            gap: 16px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 2px 8px #ffd6e0a0;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .social-icons a:hover {
+            background: #ffd6e0;
+            box-shadow: 0 4px 16px #ffd6e0a0;
+        }
+        .social-icon-img {
+            width: 22px;
+            height: 22px;
+            display: block;
+        }
+        @media (max-width: 1100px) {
+            .hot-sales-list, .buyers-list {
+                flex-wrap: wrap;
+                gap: 18px;
+            }
+            .hot-sale-card, .buyer-card {
+                width: 95vw;
+                max-width: 340px;
+            }
+        }
+        @media (max-width: 700px) {
+            .hot-sales-list, .buyers-list {
+                flex-direction: column;
+                align-items: center;
+            }
+            .contact-card {
+                max-width: 95vw;
+                padding: 18px 6vw;
+            }
+            .navbar {
+                flex-direction: column;
+                gap: 8px;
+                padding: 8px 0;
+            }
+            .icon-btn-group {
+                position: static;
+                justify-content: center;
+                margin: 12px 0;
+            }
+            .social-icons {
+                justify-content: center;
+            }
+        }
+        /* Hot sticker styles */
+        .hot-sticker {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #ff3c00 60%, #ffb347 100%);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: bold;
+            padding: 2px 10px 2px 7px;
+            border-radius: 14px 14px 14px 5px;
+            box-shadow: 0 2px 8px #ffb6d5a0, 0 0 4px #ffb34780;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            letter-spacing: 1.1px;
+            text-shadow: 0 1px 2px #d72660a0, 0 0 3px #fff7b2a0;
+            animation: hotBounce 1.2s infinite alternate;
+            filter: drop-shadow(0 1px 4px #ffb34780);
+        }
+        .hot-sticker .flame {
+            display: inline-block;
+            width: 14px;
+            height: 16px;
+            margin-right: 4px;
+            position: relative;
+            background: radial-gradient(circle at 60% 30%, #fff7b2 30%, #ffb347 60%, #ff3c00 100%);
+            border-radius: 50% 50% 60% 60% / 60% 60% 100% 100%;
+            animation: flameFlicker 0.7s infinite alternate;
+            box-shadow: 0 0 8px 2px #ffb34780, 0 0 4px #fffbe780;
+        }
+        .hot-sticker .flame-inner {
+            position: absolute;
+            left: 3px;
+            top: 3px;
+            width: 5px;
+            height: 7px;
+            background: radial-gradient(circle at 50% 40%, #fffbe7 60%, #ffd700 100%);
+            border-radius: 50% 50% 60% 60% / 60% 60% 100% 100%;
+            opacity: 0.85;
+            filter: blur(0.5px);
+            animation: flameInnerFlicker 0.5s infinite alternate;
+        }
+        .hot-sticker .flame-spark {
+            position: absolute;
+            width: 2.5px;
+            height: 2.5px;
+            background: radial-gradient(circle, #fffbe7 60%, #ffd700 100%);
+            border-radius: 50%;
+            opacity: 0.7;
+            pointer-events: none;
+            animation: sparkMove 1.2s infinite linear;
+        }
+        .hot-sticker .spark1 {
+            left: 1.5px; top: -5px;
+            animation-delay: 0s;
+        }
+        .hot-sticker .spark2 {
+            left: 7px; top: -7px;
+            width: 2px; height: 2px;
+            opacity: 0.5;
+            animation-delay: 0.3s;
+        }
+        .hot-sticker .spark3 {
+            left: 5px; top: -9px;
+            width: 1.5px; height: 1.5px;
+            opacity: 0.4;
+            animation-delay: 0.6s;
+        }
+        @keyframes flameFlicker {
+            0% { transform: scaleY(1) scaleX(1) rotate(-3deg);}
+            50% { transform: scaleY(1.18) scaleX(0.93) rotate(4deg);}
+            100% { transform: scaleY(1) scaleX(1.07) rotate(-2deg);}
+        }
+        @keyframes flameInnerFlicker {
+            0% { opacity: 0.7; transform: scaleY(1);}
+            100% { opacity: 1; transform: scaleY(1.13);}
+        }
+        @keyframes sparkMove {
+            0% { opacity: 0.7; transform: translateY(0) scale(1);}
+            60% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-7px) scale(1.15);}
+        }
+        @keyframes hotBounce {
+            0% { transform: translateX(-50%) scale(1);}
+            100% { transform: translateX(-50%) scale(1.09);}
+        }
+    </style>
+</head>
+<body>
+    <div class="Logo">
+        <img src="MyPhoto_26_03_2025_4_58_51_pm.png" alt="Flower Shop Logo">
+    </div>
+
+    <nav class="navbar">
+        <a href="Index.html"><button class="fancy-pink-btn">Home</button></a>
+        <a href="Index About.html"><button class="fancy-pink-btn">About Us</button></a>
+        <a href="Index Contact us.html"><button class="fancy-pink-btn">Contact Us</button></a>
+        <a href="Available sales.html" style="position: relative; display: inline-block;">
+            <span class="hot-sticker">
+                <span class="flame" style="width:14px;height:16px;">
+                    <span class="flame-inner" style="left:3px;top:3px;width:5px;height:7px;"></span>
+                    <span class="flame-spark spark1"></span>
+                    <span class="flame-spark spark2"></span>
+                    <span class="flame-spark spark3"></span>
+                </span>
+                <span style="font-size:0.82em;">HOT</span>
+            </span>
+            <button class="fancy-pink-btn" style="font-size:0.92em;padding:6px 16px;">Hot Sales</button>
+        </a>
+        <span class="icon-btn-group">
+            <button class="fancy-pink-btn icon-btn">
+                <img src="bxs-cart.svg" alt="Cart Icon" class="icon-img">
+            </button>
+            <button class="fancy-pink-btn icon-btn">
+                <img src="bxs-user-circle.svg" alt="User Icon" class="icon-img">
+            </button>
+        </span>
+    </nav>
+
+    <h1 class="hot-sales-title">Top 5 Hot Sales</h1>
+    <div class="hot-sales-list">
+        <!-- Sale 1 -->
+        <div class="hot-sale-card">
+            <img src="10.png" alt="Red Roses Bouquet" class="hot-sale-img">
+            <div class="hot-sale-name">Classic Red Roses</div>
+            <div class="hot-sale-price">₱1,299</div>
+            <div class="hot-sale-sold">Sold: 2,340+</div>
+            <div class="hot-sale-reviews">★★★★★ (321 reviews)</div>
+            <div class="hot-sale-actions">
+                <a href="#modal1"><button>View</button></a>
+            </div>
+        </div>
+        <!-- Sale 2 -->
+        <div class="hot-sale-card">
+            <img src="7.png" alt="Sunflower Bouquet" class="hot-sale-img">
+            <div class="hot-sale-name">Sunny Sunflowers</div>
+            <div class="hot-sale-price">₱999</div>
+            <div class="hot-sale-sold">Sold: 1,870+</div>
+            <div class="hot-sale-reviews">★★★★★ (210 reviews)</div>
+            <div class="hot-sale-actions">
+                <a href="#modal2"><button>View</button></a>
+            </div>
+        </div>
+        <!-- Sale 3 -->
+        <div class="hot-sale-card">
+            <img src="flower28.png" alt="Mixed Tulips" class="hot-sale-img">
+            <div class="hot-sale-name">Mixed Tulips</div>
+            <div class="hot-sale-price">₱1,499</div>
+            <div class="hot-sale-sold">Sold: 1,520+</div>
+            <div class="hot-sale-reviews">★★★★☆ (185 reviews)</div>
+            <div class="hot-sale-actions">
+                <a href="#modal3"><button>View</button></a>
+            </div>
+        </div>
+        <!-- Sale 4 -->
+        <div class="hot-sale-card">
+            <img src="image (5).png" alt="Pink Carnations" class="hot-sale-img">
+            <div class="hot-sale-name">Pink Carnations</div>
+            <div class="hot-sale-price">₱899</div>
+            <div class="hot-sale-sold">Sold: 1,230+</div>
+            <div class="hot-sale-reviews">★★★★★ (142 reviews)</div>
+            <div class="hot-sale-actions">
+                <a href="#modal4"><button>View</button></a>
+            </div>
+        </div>
+        <!-- Sale 5 -->
+        <div class="hot-sale-card">
+            <img src="image (4).png" alt="White Lilies" class="hot-sale-img">
+            <div class="hot-sale-name">Elegant White Lilies</div>
+            <div class="hot-sale-price">₱1,399</div>
+            <div class="hot-sale-sold">Sold: 1,110+</div>
+            <div class="hot-sale-reviews">★★★★☆ (98 reviews)</div>
+            <div class="hot-sale-actions">
+                <a href="#modal5"><button>View</button></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 1 -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close" title="Close">&times;</a>
+            <img src="10.png" alt="Red Roses Bouquet" class="modal-img">
+            <div class="modal-title">Classic Red Roses</div>
+            <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+            <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+            <div class="modal-section">
+                <span class="modal-label">Bouquet Cover Color:</span>
+                <form>
+                    <div class="modal-radio-group">
+                        <label><input type="radio" name="cover1" checked>Red</label>
+                        <label><input type="radio" name="cover1">White</label>
+                        <label><input type="radio" name="cover1">Pink</label>
+                        <label><input type="radio" name="cover1">Gold</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-section modal-payment">
+                <span class="modal-label">Payment Option:</span>
+                <form>
+                    <div class="modal-radio-group">
+                        <label><input type="radio" name="pay1" checked>Cash on Delivery</label>
+                        <label><input type="radio" name="pay1">Gcash</label>
+                        <label><input type="radio" name="pay1">Paypal</label>
+                        <label><input type="radio" name="pay1">Maya</label>
+                    </div>
+                </form>
+                <div style="margin-top:8px;color:#d72660;font-weight:bold;">This is now connected to your payment account</div>
+            </div>
+            <div class="modal-btn-group">
+                <a href="#preview1"><button class="modal-btn">Buy</button></a>
+                <a href="#preview1cart"><button class="modal-btn">Add to Cart</button></a>
+            </div>
+        </div>
+    </div>
+    <!-- Preview Modal for Buy -->
+    <div id="preview1" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+            <div>Classic Red Roses<br>₱1,299<br>Cover: Red<br>Payment: Cash on Delivery</div>
+            <a href="#thankyou1"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <!-- Thank You Modal for Buy -->
+    <div id="thankyou1" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+            <a href="#"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <!-- Preview Modal for Add to Cart -->
+    <div id="preview1cart" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+            <div>Classic Red Roses<br>₱1,299<br>Cover: Red<br>Payment: Cash on Delivery</div>
+            <a href="#cartset1"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <!-- Cart Set Modal -->
+    <div id="cartset1" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Your order is set!</div>
+            <a href="#"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close" title="Close">&times;</a>
+            <img src="7.png" alt="Sunflower Bouquet" class="modal-img">
+            <div class="modal-title">Sunny Sunflowers</div>
+            <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+            <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+            <div class="modal-section">
+                <span class="modal-label">Bouquet Cover Color:</span>
+                <form>
+                    <div class="modal-radio-group">
+                        <label><input type="radio" name="cover2" checked>Yellow</label>
+                        <label><input type="radio" name="cover2">White</label>
+                        <label><input type="radio" name="cover2">Brown</label>
+                        <label><input type="radio" name="cover2">Blue</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-section modal-payment">
+                <span class="modal-label">Payment Option:</span>
+                <form>
+                    <div class="modal-radio-group">
+                        <label><input type="radio" name="pay2" checked>Cash on Delivery</label>
+                        <label><input type="radio" name="pay2">Gcash</label>
+                        <label><input type="radio" name="pay2">Paypal</label>
+                        <label><input type="radio" name="pay2">Maya</label>
+                    </div>
+                </form>
+                <div style="margin-top:8px;color:#d72660;font-weight:bold;">This is now connected to your payment account</div>
+            </div>
+            <div class="modal-btn-group">
+                <a href="#preview2"><button class="modal-btn">Buy</button></a>
+                <a href="#preview2cart"><button class="modal-btn">Add to Cart</button></a>
+            </div>
+        </div>
+    </div>
+    <div id="preview2" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+            <div>Sunny Sunflowers<br>₱999<br>Cover: Yellow<br>Payment: Cash on Delivery</div>
+            <a href="#thankyou2"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="thankyou2" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+            <a href="#"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="preview2cart" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+            <div>Sunny Sunflowers<br>₱999<br>Cover: Yellow<br>Payment: Cash on Delivery</div>
+            <a href="#cartset2"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="cartset2" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Your order is set!</div>
+            <a href="#"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close" title="Close">&times;</a>
+            <img src="flower28.png" alt="Mixed Tulips" class="modal-img">
+            <div class="modal-title">Mixed Tulips</div>
+            <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+            <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+            <div class="modal-section">
+                <span class="modal-label">Bouquet Cover Color:</span>
+                <form>
+                    <div class="modal-radio-group">
+                        <label><input type="radio" name="cover3" checked>Purple</label>
+                        <label><input type="radio" name="cover3">White</label>
+                        <label><input type="radio" name="cover3">Pink</label>
+                        <label><input type="radio" name="cover3">Blue</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-section modal-payment">
+                <span class="modal-label">Payment Option:</span>
+                <form>
+                    <div class="modal-radio-group">
+                        <label><input type="radio" name="pay3" checked>Cash on Delivery</label>
+                        <label><input type="radio" name="pay3">Gcash</label>
+                        <label><input type="radio" name="pay3">Paypal</label>
+                        <label><input type="radio" name="pay3">Maya</label>
+                    </div>
+                </form>
+                <div style="margin-top:8px;color:#d72660;font-weight:bold;">This is now connected to your payment account</div>
+            </div>
+            <div class="modal-btn-group">
+                <a href="#preview3"><button class="modal-btn">Buy</button></a>
+                <a href="#preview3cart"><button class="modal-btn">Add to Cart</button></a>
+            </div>
+        </div>
+    </div>
+    <div id="preview3" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+            <div>Mixed Tulips<br>₱1,499<br>Cover: Purple<br>Payment: Cash on Delivery</div>
+            <a href="#thankyou3"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="thankyou3" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+            <a href="#"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="preview3cart" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+            <div>Mixed Tulips<br>₱1,499<br>Cover: Purple<br>Payment: Cash on Delivery</div>
+            <a href="#cartset3"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="cartset3" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Your order is set!</div>
+            <a href="#"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+
+    <!-- Modal 4 -->
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close" title="Close">&times;</a>
+            <img src="image (5).png" alt="Pink Carnations" class="modal-img">
+            <div class="modal-title">Pink Carnations</div>
+            <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+            <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+            <div class="modal-section">
+                <span class="modal-label">Bouquet Cover Color:</span>
+                <form>
+                    <div class="modal-radio-group">
+                        <label><input type="radio" name="cover4" checked>Pink</label>
+                        <label><input type="radio" name="cover4">White</label>
+                        <label><input type="radio" name="cover4">Red</label>
+                        <label><input type="radio" name="cover4">Silver</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-section modal-payment">
+                <span class="modal-label">Payment Option:</span>
+                <form>
+                    <div class="modal-radio-group">
+                        <label><input type="radio" name="pay4" checked>Cash on Delivery</label>
+                        <label><input type="radio" name="pay4">Gcash</label>
+                        <label><input type="radio" name="pay4">Paypal</label>
+                        <label><input type="radio" name="pay4">Maya</label>
+                    </div>
+                </form>
+                <div style="margin-top:8px;color:#d72660;font-weight:bold;">This is now connected to your payment account</div>
+            </div>
+            <div class="modal-btn-group">
+                <a href="#preview4"><button class="modal-btn">Buy</button></a>
+                <a href="#preview4cart"><button class="modal-btn">Add to Cart</button></a>
+            </div>
+        </div>
+    </div>
+    <div id="preview4" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+            <div>Pink Carnations<br>₱899<br>Cover: Pink<br>Payment: Cash on Delivery</div>
+            <a href="#thankyou4"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="thankyou4" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+            <a href="#"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="preview4cart" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+            <div>Pink Carnations<br>₱899<br>Cover: Pink<br>Payment: Cash on Delivery</div>
+            <a href="#cartset4"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="cartset4" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Your order is set!</div>
+            <a href="#"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+
+    <!-- Modal 5 -->
+    <div id="modal5" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close" title="Close">&times;</a>
+            <img src="image (4).png" alt="White Lilies" class="modal-img">
+            <div class="modal-title">Elegant White Lilies</div>
+            <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+            <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+            <div class="modal-section">
+                <span class="modal-label">Bouquet Cover Color:</span>
+                <form>
+                    <div class="modal-radio-group">
+                        <label><input type="radio" name="cover5" checked>White</label>
+                        <label><input type="radio" name="cover5">Blue</label>
+                        <label><input type="radio" name="cover5">Silver</label>
+                        <label><input type="radio" name="cover5">Gold</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-section modal-payment">
+                <span class="modal-label">Payment Option:</span>
+                <form>
+                    <div class="modal-radio-group">
+                        <label><input type="radio" name="pay5" checked>Cash on Delivery</label>
+                        <label><input type="radio" name="pay5">Gcash</label>
+                        <label><input type="radio" name="pay5">Paypal</label>
+                        <label><input type="radio" name="pay5">Maya</label>
+                    </div>
+                </form>
+                <div style="margin-top:8px;color:#d72660;font-weight:bold;">This is now connected to your payment account</div>
+            </div>
+            <div class="modal-btn-group">
+                <a href="#preview5"><button class="modal-btn">Buy</button></a>
+                <a href="#preview5cart"><button class="modal-btn">Add to Cart</button></a>
+            </div>
+        </div>
+    </div>
+    <div id="preview5" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+            <div>Elegant White Lilies<br>₱1,399<br>Cover: White<br>Payment: Cash on Delivery</div>
+            <a href="#thankyou5"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="thankyou5" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+            <a href="#"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="preview5cart" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+            <div>Elegant White Lilies<br>₱1,399<br>Cover: White<br>Payment: Cash on Delivery</div>
+            <a href="#cartset5"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+    <div id="cartset5" class="popup">
+        <div class="popup-content">
+            <div style="font-weight:bold;margin-bottom:10px;">Your order is set!</div>
+            <a href="#"><button class="popup-btn">OK</button></a>
+        </div>
+    </div>
+
+    <!-- Buyers Section -->
+    <div class="buyers-section">
+        <div class="buyers-title">Why Our Buyers Love Us</div>
+        <div class="buyers-list">
+            <div class="buyer-card">
+                <img src="image.png" alt="Buyer 1" class="buyer-img">
+                <div class="buyer-name">Anna Reyes</div>
+                <div class="buyer-msg">"The flowers are always fresh and the delivery is fast! My mom loved her bouquet."</div>
+            </div>
+            <div class="buyer-card">
+                <img src="image (2).png" alt="Buyer 2" class="buyer-img">
+                <div class="buyer-name">Mark Santos</div>
+                <div class="buyer-msg">"Great service and beautiful arrangements. Highly recommended for any occasion!"</div>
+            </div>
+            <div class="buyer-card">
+                <img src="image (1).png" alt="Buyer 3" class="buyer-img">
+                <div class="buyer-name">Jessa Lim</div>
+                <div class="buyer-msg">"I love the variety of bouquet covers. The payment options are so convenient."</div>
+            </div>
+            <div class="buyer-card">
+                <img src="1.png" alt="Buyer 4" class="buyer-img">
+                <div class="buyer-name">Carlos Dela Cruz</div>
+                <div class="buyer-msg">"Ordered for my anniversary, and it arrived on time. My wife was so happy!"</div>
+            </div>
+            <div class="buyer-card">
+                <img src="image (3).png" alt="Buyer 5" class="buyer-img">
+                <div class="buyer-name">Khen Gonzales</div>
+                <div class="buyer-msg">"The staff are friendly and helpful. I always get my flowers here."</div>
+            </div>
+            <div class="buyer-card">
+                <img src="5.png" alt="Buyer 6" class="buyer-img">
+                <div class="buyer-name">Leo Tan</div>
+                <div class="buyer-msg">"Affordable prices and the bouquets look amazing in person. Will order again!"</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Flower Shop. All rights reserved.</p>
+            <p>
+                <a href="Index About.html">About</a> |
+                <a href="Index Contact us.html">Contact Us</a> |
+                <a href="Available sales.html">Hot Sales</a>
+            </p>
+            <p>
+                Email: <a href="mailto:info@flowershop.com">info@flowershop.com</a> <br>
+                Contact: (123) 456-7890 <br>
+                Address: 123 Blossom Street, Bagasbas City
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

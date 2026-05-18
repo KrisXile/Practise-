@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flower Shop - Shopping</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Arial:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', 'Playfair Display', serif;
+      background: url('background.png.png') center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      color: #7b2234;
+    }
+    .Logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 32px;
+    }
+    .Logo img {
+      width: 300px;
+      height: auto;
+      border-radius: 50%;
+      box-shadow: 0 4px 24px #ffb6d5a0;
+      border: 4px solid #ffe4ec;
+      background: #ffffff80;
+    }
+    .navbar {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+      background: rgba(214, 157, 181, 0);
+      padding: 12px 0;
+      border-radius: 30px;
+      box-shadow: 0 2px 12px #ffd6e000;
+      position: relative;
+      max-width: 400px;
+      margin-left: 32px;
+    }
+    .back-arrow {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: #723e4f;
+      font-weight: bold;
+      font-size: 1.1em;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: 18px;
+      background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+      box-shadow: 0 2px 8px #ffd6e0a0;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .back-arrow:hover {
+      background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+      transform: scale(1.05);
+    }
+    .back-arrow svg {
+      width: 22px;
+      height: 22px;
+      fill: #723e4f;
+    }
+    .shopping-title {
+      text-align: center;
+      font-family: 'Playfair Display', 'Arial', serif;
+      font-size: 2.5rem;
+      color: #d72660;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+    }
+    .shopping-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      margin: 0 auto 40px auto;
+      max-width: 1200px;
+    }
+    .shopping-card {
+      background: rgba(255, 228, 236, 0.97);
+      border-radius: 24px;
+      box-shadow: 0 4px 24px #d2a0adda;
+      width: 320px;
+      padding: 22px 18px 18px 18px;
+      text-align: center;
+      position: relative;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .shopping-card:hover {
+      box-shadow: 0 8px 32px #ffd6e0c0;
+      transform: translateY(-4px) scale(1.03);
+    }
+    .shopping-img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 12px #e0b0bcc7;
+    }
+    .shopping-name {
+      font-family: 'Playfair Display', 'Arial', serif;
+      font-size: 1.3rem;
+      color: #d72660;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+    .shopping-price {
+      color: #7b2234;
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .shopping-sold {
+      color: #ff0090;
+      font-size: 0.98rem;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    .shopping-reviews {
+      color: #7b2234;
+      font-size: 0.97rem;
+      margin-bottom: 10px;
+    }
+    .shopping-actions {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .shopping-actions a button {
+      font-size: 0.99em;
+      padding: 10px 30px;
+      border-radius: 20px;
+      border: none;
+      background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+      color: #7b2234;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #a87984b5;
+      transition: background 0.2s, transform 0.2s;
+      margin: 0 2px;
+      text-shadow: 0 1px 2px #e4b1c2;
+    }
+    .shopping-actions a button:hover {
+      background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+      transform: scale(1.05);
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(255, 182, 213, 0.25);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal:target {
+      display: flex;
+    }
+    .modal-content {
+      background: #fff;
+      border-radius: 24px;
+      max-width: 420px;
+      width: 95vw;
+      padding: 32px 24px 24px 24px;
+      box-shadow: 0 8px 32px #ffd6e0c0;
+      text-align: left;
+      position: relative;
+      color: #7b2234;
+      font-size: 1.08em;
+      animation: popIn 0.3s;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.8);}
+      100% { transform: scale(1);}
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      font-size: 1.5em;
+      color: #d72660;
+      text-decoration: none;
+      font-weight: bold;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .modal-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 12px #ffd6e0a0;
+    }
+    .modal-title {
+      font-family: 'Playfair Display', 'Arial', serif;
+      font-size: 1.3rem;
+      color: #d72660;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+    .modal-section {
+      margin-bottom: 10px;
+    }
+    .modal-label {
+      font-weight: bold;
+      margin-right: 6px;
+    }
+    .modal-radio-group {
+      margin-bottom: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .modal-radio-group label {
+      background: #ffe4ec;
+      border-radius: 10px;
+      padding: 4px 12px;
+      cursor: pointer;
+      border: 1px solid #ffd6e0;
+      font-size: 0.98em;
+      margin-bottom: 2px;
+    }
+    .modal-radio-group input[type="radio"] {
+      margin-right: 4px;
+    }
+    .modal-payment {
+      margin-bottom: 12px;
+    }
+    .modal-btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      justify-content: flex-end;
+    }
+    .modal-btn {
+      font-size: 1em;
+      padding: 7px 18px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+      color: #7b2234;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #ffd6e0a0;
+      transition: background 0.2s, transform 0.2s;
+      margin: 0 2px;
+      text-shadow: 0 1px 2px #e4b1c2;
+    }
+    .modal-btn:hover {
+      background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+      transform: scale(1.05);
+    }
+    /* Popup styles */
+    .popup {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(255, 182, 213, 0.25);
+      justify-content: center;
+      align-items: center;
+    }
+    .popup:target {
+      display: flex;
+    }
+    .popup-content {
+      background: #fff;
+      border-radius: 18px;
+      max-width: 340px;
+      width: 90vw;
+      padding: 32px 18px 22px 18px;
+      box-shadow: 0 8px 32px #ffd6e0c0;
+      text-align: center;
+      color: #7b2234;
+      font-size: 1.1em;
+      animation: popIn 0.3s;
+    }
+    .popup-btn {
+      margin-top: 18px;
+      font-size: 1em;
+      padding: 7px 18px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+      color: #7b2234;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #ffd6e0a0;
+      transition: background 0.2s, transform 0.2s;
+      text-shadow: 0 1px 2px #e4b1c2;
+    }
+    .popup-btn:hover {
+      background: linear-gradient(90deg, #ffd6e0 0%, #ffe4ec 100%);
+      transform: scale(1.05);
+    }
+    .popup-btn.cancel {
+      background: #ffe4ec;
+      color: #d72660;
+      margin-left: 10px;
+    }
+    .popup-btn.cancel:hover {
+      background: #ffd6e0;
+    }
+    .footer {
+      background: linear-gradient(90deg, #ffe4ec 0%, #ffd6e0 100%);
+      color: #7b2234;
+      text-align: center;
+      padding: 32px 10px 18px 10px;
+      border-top-left-radius: 32px;
+      border-top-right-radius: 32px;
+      box-shadow: 0 -2px 16px #ffd6e0a0;
+      margin-top: 48px;
+    }
+    .footer-content a {
+      color: #d72660;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 6px;
+    }
+    .footer-content a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 1100px) {
+      .shopping-list {
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+      .shopping-card {
+        width: 95vw;
+        max-width: 340px;
+      }
+    }
+    @media (max-width: 700px) {
+      .shopping-list {
+        flex-direction: column;
+        align-items: center;
+      }
+      .navbar {
+        max-width: 95vw;
+        margin-left: 2vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="Logo">
+    <img src="MyPhoto_26_03_2025_4_58_51_pm.png" alt="Flower Shop Logo">
+  </div>
+  <nav class="navbar">
+    <a href="Index.html" class="back-arrow" title="Back to Home">
+      <svg viewBox="0 0 24 24"><path d="M15.5 19a1 1 0 0 1-.7-1.7l-5.3-5.3a1 1 0 0 1 0-1.4l5.3-5.3a1 1 0 1 1 1.4 1.4L12.42 12l4.78 4.78A1 1 0 0 1 15.5 19z"/></svg>
+      Home
+    </a>
+    <span style="margin-left:20px;font-size:1.1em;font-weight:bold;color:#d72660;"></span>
+  </nav>
+  <h1 class="shopping-title">Shop Our Best Bouquets</h1>
+  <div class="shopping-list">
+    
+    <!-- 10 sales, sample images and data -->
+    <!-- 1 -->
+    <div class="shopping-card">
+      <img src="flower21.png" alt="Red Roses Bouquet" class="shopping-img">
+      <div class="shopping-name">Classic Red Roses</div>
+      <div class="shopping-price">₱1,299</div>
+      <div class="shopping-sold">Sold: 2,340+</div>
+      <div class="shopping-reviews">★★★★★ (321 reviews)</div>
+      <div class="shopping-actions">
+        <a href="#modal1"><button>View</button></a>
+      </div>
+    </div>
+    <!-- 2 -->
+    <div class="shopping-card">
+      <img src="flower40.png" alt="Sunflower Bouquet" class="shopping-img">
+      <div class="shopping-name">Sunny Sunflowers</div>
+      <div class="shopping-price">₱999</div>
+      <div class="shopping-sold">Sold: 1,870+</div>
+      <div class="shopping-reviews">★★★★★ (210 reviews)</div>
+      <div class="shopping-actions">
+        <a href="#modal2"><button>View</button></a>
+      </div>
+    </div>
+    <!-- 3 -->
+    <div class="shopping-card">
+      <img src="flower27.png" alt="Mixed Tulips" class="shopping-img">
+      <div class="shopping-name">Mixed Tulips</div>
+      <div class="shopping-price">₱1,499</div>
+      <div class="shopping-sold">Sold: 1,520+</div>
+      <div class="shopping-reviews">★★★★☆ (185 reviews)</div>
+      <div class="shopping-actions">
+        <a href="#modal3"><button>View</button></a>
+      </div>
+    </div>
+    <!-- 4 -->
+    <div class="shopping-card">
+      <img src="flower33.png" alt="Pink Carnations" class="shopping-img">
+      <div class="shopping-name">Pink Carnations</div>
+      <div class="shopping-price">₱899</div>
+      <div class="shopping-sold">Sold: 1,230+</div>
+      <div class="shopping-reviews">★★★★★ (142 reviews)</div>
+      <div class="shopping-actions">
+        <a href="#modal4"><button>View</button></a>
+      </div>
+    </div>
+    <!-- 5 -->
+    <div class="shopping-card">
+      <img src="flower23.png" alt="White Lilies" class="shopping-img">
+      <div class="shopping-name">Elegant White Lilies</div>
+      <div class="shopping-price">₱1,399</div>
+      <div class="shopping-sold">Sold: 1,110+</div>
+      <div class="shopping-reviews">★★★★☆ (98 reviews)</div>
+      <div class="shopping-actions">
+        <a href="#modal5"><button>View</button></a>
+      </div>
+    </div>
+    <!-- 6 -->
+    <div class="shopping-card">
+      <img src="flower36.png" alt="Blue Hydrangeas" class="shopping-img">
+      <div class="shopping-name">Blue Hydrangeas</div>
+      <div class="shopping-price">₱1,199</div>
+      <div class="shopping-sold">Sold: 980+</div>
+      <div class="shopping-reviews">★★★★★ (77 reviews)</div>
+      <div class="shopping-actions">
+        <a href="#modal6"><button>View</button></a>
+      </div>
+    </div>
+    <!-- 7 -->
+    <div class="shopping-card">
+      <img src="flower37.png" alt="Yellow Daisies" class="shopping-img">
+      <div class="shopping-name">Yellow Daisies</div>
+      <div class="shopping-price">₱799</div>
+      <div class="shopping-sold">Sold: 1,050+</div>
+      <div class="shopping-reviews">★★★★☆ (65 reviews)</div>
+      <div class="shopping-actions">
+        <a href="#modal7"><button>View</button></a>
+      </div>
+    </div>
+    <!-- 8 -->
+    <div class="shopping-card">
+      <img src="flower34.png" alt="Orchid Elegance" class="shopping-img">
+      <div class="shopping-name">Orchid Elegance</div>
+      <div class="shopping-price">₱1,799</div>
+      <div class="shopping-sold">Sold: 670+</div>
+      <div class="shopping-reviews">★★★★★ (54 reviews)</div>
+      <div class="shopping-actions">
+        <a href="#modal8"><button>View</button></a>
+      </div>
+    </div>
+    <!-- 9 -->
+    <div class="shopping-card">
+      <img src="flower17.png" alt="Peach Peonies" class="shopping-img">
+      <div class="shopping-name">Peach Peonies</div>
+      <div class="shopping-price">₱1,599</div>
+      <div class="shopping-sold">Sold: 890+</div>
+      <div class="shopping-reviews">★★★★★ (102 reviews)</div>
+      <div class="shopping-actions">
+        <a href="#modal9"><button>View</button></a>
+      </div>
+    </div>
+    <!-- 10 -->
+    <div class="shopping-card">
+      <img src="flower32.png" alt="Rainbow Mix" class="shopping-img">
+      <div class="shopping-name">Rainbow Mix</div>
+      <div class="shopping-price">₱1,099</div>
+      <div class="shopping-sold">Sold: 1,300+</div>
+      <div class="shopping-reviews">★★★★☆ (120 reviews)</div>
+      <div class="shopping-actions">
+        <a href="#modal10"><button>View</button></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALS (1-10) -->
+  <!-- For brevity, only 1 is shown in full, copy and change numbers/names/colors for 2-10 -->
+  <!-- Modal 1 -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close" title="Close">&times;</a>
+      <img src="flower21.png" alt="Red Roses Bouquet" class="modal-img">
+      <div class="modal-title">Classic Red Roses</div>
+      <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+      <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+      <div class="modal-section">
+        <span class="modal-label">Bouquet Cover Color:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="cover1" checked>Red</label>
+            <label><input type="radio" name="cover1">White</label>
+            <label><input type="radio" name="cover1">Pink</label>
+            <label><input type="radio" name="cover1">Gold</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-section modal-payment">
+        <span class="modal-label">Payment Option:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="pay1" checked>Cash on Delivery</label>
+            <label><input type="radio" name="pay1">Gcash</label>
+            <label><input type="radio" name="pay1">Paypal</label>
+          </div>
+        </form>
+        <div style="margin-top:8px;color:#d72660;font-weight:bold;">This will be auto connected to your payment account</div>
+      </div>
+      <div class="modal-btn-group">
+        <a href="#preview1"><button class="modal-btn">Buy</button></a>
+        <a href="#preview1cart"><button class="modal-btn">Add to Cart</button></a>
+      </div>
+    </div>
+  </div>
+  <!-- Preview Modal for Buy -->
+  <div id="preview1" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Classic Red Roses<br>₱1,299<br>Cover: Red<br>Payment: Cash on Delivery</div>
+      <a href="#thankyou1"><button class="popup-btn">OK</button></a>
+      <a href="#modal1"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <!-- Thank You Modal for Buy -->
+  <div id="thankyou1" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+  <!-- Preview Modal for Add to Cart -->
+  <div id="preview1cart" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Classic Red Roses<br>₱1,299<br>Cover: Red<br>Payment: Cash on Delivery</div>
+      <a href="#cartset1"><button class="popup-btn">OK</button></a>
+      <a href="#modal1"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <!-- Cart Set Modal -->
+  <div id="cartset1" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Your order is added to cart!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+
+  <!-- Modal 2 -->
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close" title="Close">&times;</a>
+      <img src="flower40.png" alt="Sunflower Bouquet" class="modal-img">
+      <div class="modal-title">Sunny Sunflowers</div>
+      <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+      <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+      <div class="modal-section">
+        <span class="modal-label">Bouquet Cover Color:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="cover2" checked>Yellow</label>
+            <label><input type="radio" name="cover2">White</label>
+            <label><input type="radio" name="cover2">Brown</label>
+            <label><input type="radio" name="cover2">Blue</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-section modal-payment">
+        <span class="modal-label">Payment Option:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="pay2" checked>Cash on Delivery</label>
+            <label><input type="radio" name="pay2">Gcash</label>
+            <label><input type="radio" name="pay2">Paypal</label>
+          </div>
+        </form>
+        <div style="margin-top:8px;color:#d72660;font-weight:bold;">This will be auto connected to your payment account</div>
+      </div>
+      <div class="modal-btn-group">
+        <a href="#preview2"><button class="modal-btn">Buy</button></a>
+        <a href="#preview2cart"><button class="modal-btn">Add to Cart</button></a>
+      </div>
+    </div>
+  </div>
+  <div id="preview2" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Sunny Sunflowers<br>₱999<br>Cover: Yellow<br>Payment: Cash on Delivery</div>
+      <a href="#thankyou2"><button class="popup-btn">OK</button></a>
+      <a href="#modal2"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="thankyou2" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+  <div id="preview2cart" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Sunny Sunflowers<br>₱999<br>Cover: Yellow<br>Payment: Cash on Delivery</div>
+      <a href="#cartset2"><button class="popup-btn">OK</button></a>
+      <a href="#modal2"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="cartset2" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Your order is added to cart!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+
+  <!-- Modal 3 -->
+  <div id="modal3" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close" title="Close">&times;</a>
+      <img src="flower27.png" alt="Mixed Tulips" class="modal-img">
+      <div class="modal-title">Mixed Tulips</div>
+      <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+      <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+      <div class="modal-section">
+        <span class="modal-label">Bouquet Cover Color:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="cover3" checked>Purple</label>
+            <label><input type="radio" name="cover3">White</label>
+            <label><input type="radio" name="cover3">Pink</label>
+            <label><input type="radio" name="cover3">Blue</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-section modal-payment">
+        <span class="modal-label">Payment Option:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="pay3" checked>Cash on Delivery</label>
+            <label><input type="radio" name="pay3">Gcash</label>
+            <label><input type="radio" name="pay3">Paypal</label>
+          </div>
+        </form>
+        <div style="margin-top:8px;color:#d72660;font-weight:bold;">This will be auto connected to your payment account</div>
+      </div>
+      <div class="modal-btn-group">
+        <a href="#preview3"><button class="modal-btn">Buy</button></a>
+        <a href="#preview3cart"><button class="modal-btn">Add to Cart</button></a>
+      </div>
+    </div>
+  </div>
+  <div id="preview3" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Mixed Tulips<br>₱1,499<br>Cover: Purple<br>Payment: Cash on Delivery</div>
+      <a href="#thankyou3"><button class="popup-btn">OK</button></a>
+      <a href="#modal3"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="thankyou3" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+  <div id="preview3cart" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Mixed Tulips<br>₱1,499<br>Cover: Purple<br>Payment: Cash on Delivery</div>
+      <a href="#cartset3"><button class="popup-btn">OK</button></a>
+      <a href="#modal3"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="cartset3" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Your order is added to cart!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+
+  <!-- Modal 4 -->
+  <div id="modal4" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close" title="Close">&times;</a>
+      <img src="flower33.png" alt="Pink Carnations" class="modal-img">
+      <div class="modal-title">Pink Carnations</div>
+      <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+      <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+      <div class="modal-section">
+        <span class="modal-label">Bouquet Cover Color:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="cover4" checked>Pink</label>
+            <label><input type="radio" name="cover4">White</label>
+            <label><input type="radio" name="cover4">Red</label>
+            <label><input type="radio" name="cover4">Silver</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-section modal-payment">
+        <span class="modal-label">Payment Option:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="pay4" checked>Cash on Delivery</label>
+            <label><input type="radio" name="pay4">Gcash</label>
+            <label><input type="radio" name="pay4">Paypal</label>
+          </div>
+        </form>
+        <div style="margin-top:8px;color:#d72660;font-weight:bold;">This will be auto connected to your payment account</div>
+      </div>
+      <div class="modal-btn-group">
+        <a href="#preview4"><button class="modal-btn">Buy</button></a>
+        <a href="#preview4cart"><button class="modal-btn">Add to Cart</button></a>
+      </div>
+    </div>
+  </div>
+  <div id="preview4" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Pink Carnations<br>₱899<br>Cover: Pink<br>Payment: Cash on Delivery</div>
+      <a href="#thankyou4"><button class="popup-btn">OK</button></a>
+      <a href="#modal4"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="thankyou4" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+  <div id="preview4cart" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Pink Carnations<br>₱899<br>Cover: Pink<br>Payment: Cash on Delivery</div>
+      <a href="#cartset4"><button class="popup-btn">OK</button></a>
+      <a href="#modal4"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="cartset4" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Your order is added to cart!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+
+  <!-- Modal 5 -->
+  <div id="modal5" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close" title="Close">&times;</a>
+      <img src="flower23.png" alt="White Lilies" class="modal-img">
+      <div class="modal-title">Elegant White Lilies</div>
+      <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+      <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+      <div class="modal-section">
+        <span class="modal-label">Bouquet Cover Color:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="cover5" checked>White</label>
+            <label><input type="radio" name="cover5">Blue</label>
+            <label><input type="radio" name="cover5">Silver</label>
+            <label><input type="radio" name="cover5">Gold</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-section modal-payment">
+        <span class="modal-label">Payment Option:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="pay5" checked>Cash on Delivery</label>
+            <label><input type="radio" name="pay5">Gcash</label>
+            <label><input type="radio" name="pay5">Paypal</label>
+          </div>
+        </form>
+        <div style="margin-top:8px;color:#d72660;font-weight:bold;">This will be auto connected to your payment account</div>
+      </div>
+      <div class="modal-btn-group">
+        <a href="#preview5"><button class="modal-btn">Buy</button></a>
+        <a href="#preview5cart"><button class="modal-btn">Add to Cart</button></a>
+      </div>
+    </div>
+  </div>
+  <div id="preview5" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Elegant White Lilies<br>₱1,399<br>Cover: White<br>Payment: Cash on Delivery</div>
+      <a href="#thankyou5"><button class="popup-btn">OK</button></a>
+      <a href="#modal5"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="thankyou5" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+  <div id="preview5cart" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Elegant White Lilies<br>₱1,399<br>Cover: White<br>Payment: Cash on Delivery</div>
+      <a href="#cartset5"><button class="popup-btn">OK</button></a>
+      <a href="#modal5"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="cartset5" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Your order is added to cart!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+
+  <!-- Modal 6 -->
+  <div id="modal6" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close" title="Close">&times;</a>
+      <img src="flower36.png" alt="Blue Hydrangeas" class="modal-img">
+      <div class="modal-title">Blue Hydrangeas</div>
+      <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+      <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+      <div class="modal-section">
+        <span class="modal-label">Bouquet Cover Color:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="cover6" checked>Blue</label>
+            <label><input type="radio" name="cover6">White</label>
+            <label><input type="radio" name="cover6">Silver</label>
+            <label><input type="radio" name="cover6">Pink</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-section modal-payment">
+        <span class="modal-label">Payment Option:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="pay6" checked>Cash on Delivery</label>
+            <label><input type="radio" name="pay6">Gcash</label>
+            <label><input type="radio" name="pay6">Paypal</label>
+          </div>
+        </form>
+        <div style="margin-top:8px;color:#d72660;font-weight:bold;">This will be auto connected to your payment account</div>
+      </div>
+      <div class="modal-btn-group">
+        <a href="#preview6"><button class="modal-btn">Buy</button></a>
+        <a href="#preview6cart"><button class="modal-btn">Add to Cart</button></a>
+      </div>
+    </div>
+  </div>
+  <div id="preview6" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Blue Hydrangeas<br>₱1,199<br>Cover: Blue<br>Payment: Cash on Delivery</div>
+      <a href="#thankyou6"><button class="popup-btn">OK</button></a>
+      <a href="#modal6"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="thankyou6" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+  <div id="preview6cart" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Blue Hydrangeas<br>₱1,199<br>Cover: Blue<br>Payment: Cash on Delivery</div>
+      <a href="#cartset6"><button class="popup-btn">OK</button></a>
+      <a href="#modal6"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="cartset6" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Your order is added to cart!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+
+  <!-- Modal 7 -->
+  <div id="modal7" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close" title="Close">&times;</a>
+      <img src="flower37.png" alt="Yellow Daisies" class="modal-img">
+      <div class="modal-title">Yellow Daisies</div>
+      <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+      <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+      <div class="modal-section">
+        <span class="modal-label">Bouquet Cover Color:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="cover7" checked>Yellow</label>
+            <label><input type="radio" name="cover7">White</label>
+            <label><input type="radio" name="cover7">Green</label>
+            <label><input type="radio" name="cover7">Pink</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-section modal-payment">
+        <span class="modal-label">Payment Option:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="pay7" checked>Cash on Delivery</label>
+            <label><input type="radio" name="pay7">Gcash</label>
+            <label><input type="radio" name="pay7">Paypal</label>
+          </div>
+        </form>
+        <div style="margin-top:8px;color:#d72660;font-weight:bold;">This will be auto connected to your payment account</div>
+      </div>
+      <div class="modal-btn-group">
+        <a href="#preview7"><button class="modal-btn">Buy</button></a>
+        <a href="#preview7cart"><button class="modal-btn">Add to Cart</button></a>
+      </div>
+    </div>
+  </div>
+  <div id="preview7" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Yellow Daisies<br>₱799<br>Cover: Yellow<br>Payment: Cash on Delivery</div>
+      <a href="#thankyou7"><button class="popup-btn">OK</button></a>
+      <a href="#modal7"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="thankyou7" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+  <div id="preview7cart" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Yellow Daisies<br>₱799<br>Cover: Yellow<br>Payment: Cash on Delivery</div>
+      <a href="#cartset7"><button class="popup-btn">OK</button></a>
+      <a href="#modal7"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="cartset7" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Your order is added to cart!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+
+  <!-- Modal 8 -->
+  <div id="modal8" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close" title="Close">&times;</a>
+      <img src="flower34.png" alt="Orchid Elegance" class="modal-img">
+      <div class="modal-title">Orchid Elegance</div>
+      <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+      <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+      <div class="modal-section">
+        <span class="modal-label">Bouquet Cover Color:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="cover8" checked>Purple</label>
+            <label><input type="radio" name="cover8">White</label>
+            <label><input type="radio" name="cover8">Pink</label>
+            <label><input type="radio" name="cover8">Gold</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-section modal-payment">
+        <span class="modal-label">Payment Option:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="pay8" checked>Cash on Delivery</label>
+            <label><input type="radio" name="pay8">Gcash</label>
+            <label><input type="radio" name="pay8">Paypal</label>
+          </div>
+        </form>
+        <div style="margin-top:8px;color:#d72660;font-weight:bold;">This will be auto connected to your payment account</div>
+      </div>
+      <div class="modal-btn-group">
+        <a href="#preview8"><button class="modal-btn">Buy</button></a>
+        <a href="#preview8cart"><button class="modal-btn">Add to Cart</button></a>
+      </div>
+    </div>
+  </div>
+  <div id="preview8" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Orchid Elegance<br>₱1,799<br>Cover: Purple<br>Payment: Cash on Delivery</div>
+      <a href="#thankyou8"><button class="popup-btn">OK</button></a>
+      <a href="#modal8"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="thankyou8" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+  <div id="preview8cart" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Orchid Elegance<br>₱1,799<br>Cover: Purple<br>Payment: Cash on Delivery</div>
+      <a href="#cartset8"><button class="popup-btn">OK</button></a>
+      <a href="#modal8"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="cartset8" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Your order is added to cart!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+
+  <!-- Modal 9 -->
+  <div id="modal9" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close" title="Close">&times;</a>
+      <img src="flower17.png" alt="Peach Peonies" class="modal-img">
+      <div class="modal-title">Peach Peonies</div>
+      <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+      <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+      <div class="modal-section">
+        <span class="modal-label">Bouquet Cover Color:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="cover9" checked>Peach</label>
+            <label><input type="radio" name="cover9">White</label>
+            <label><input type="radio" name="cover9">Pink</label>
+            <label><input type="radio" name="cover9">Gold</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-section modal-payment">
+        <span class="modal-label">Payment Option:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="pay9" checked>Cash on Delivery</label>
+            <label><input type="radio" name="pay9">Gcash</label>
+            <label><input type="radio" name="pay9">Paypal</label>
+          </div>
+        </form>
+        <div style="margin-top:8px;color:#d72660;font-weight:bold;">This will be auto connected to your payment account</div>
+      </div>
+      <div class="modal-btn-group">
+        <a href="#preview9"><button class="modal-btn">Buy</button></a>
+        <a href="#preview9cart"><button class="modal-btn">Add to Cart</button></a>
+      </div>
+    </div>
+  </div>
+  <div id="preview9" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Peach Peonies<br>₱1,599<br>Cover: Peach<br>Payment: Cash on Delivery</div>
+      <a href="#thankyou9"><button class="popup-btn">OK</button></a>
+      <a href="#modal9"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="thankyou9" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+  <div id="preview9cart" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Peach Peonies<br>₱1,599<br>Cover: Peach<br>Payment: Cash on Delivery</div>
+      <a href="#cartset9"><button class="popup-btn">OK</button></a>
+      <a href="#modal9"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="cartset9" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Your order is added to cart!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+
+  <!-- Modal 10 -->
+  <div id="modal10" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close" title="Close">&times;</a>
+      <img src="flower32.png" alt="Rainbow Mix" class="modal-img">
+      <div class="modal-title">Rainbow Mix</div>
+      <div class="modal-section"><b>Sale at:</b> 123 Blossom Street, Bagasbas City</div>
+      <div class="modal-section"><b>Arriving/Delivery:</b> 5-7 days or less</div>
+      <div class="modal-section">
+        <span class="modal-label">Bouquet Cover Color:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="cover10" checked>Rainbow</label>
+            <label><input type="radio" name="cover10">White</label>
+            <label><input type="radio" name="cover10">Pink</label>
+            <label><input type="radio" name="cover10">Blue</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-section modal-payment">
+        <span class="modal-label">Payment Option:</span>
+        <form>
+          <div class="modal-radio-group">
+            <label><input type="radio" name="pay10" checked>Cash on Delivery</label>
+            <label><input type="radio" name="pay10">Gcash</label>
+            <label><input type="radio" name="pay10">Paypal</label>
+          </div>
+        </form>
+        <div style="margin-top:8px;color:#d72660;font-weight:bold;">This will be auto connected to your payment account</div>
+      </div>
+      <div class="modal-btn-group">
+        <a href="#preview10"><button class="modal-btn">Buy</button></a>
+        <a href="#preview10cart"><button class="modal-btn">Add to Cart</button></a>
+      </div>
+    </div>
+  </div>
+  <div id="preview10" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Rainbow Mix<br>₱1,099<br>Cover: Rainbow<br>Payment: Cash on Delivery</div>
+      <a href="#thankyou10"><button class="popup-btn">OK</button></a>
+      <a href="#modal10"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="thankyou10" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Thank you for ordering!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+  <div id="preview10cart" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Order Preview</div>
+      <div>Rainbow Mix<br>₱1,099<br>Cover: Rainbow<br>Payment: Cash on Delivery</div>
+      <a href="#cartset10"><button class="popup-btn">OK</button></a>
+      <a href="#modal10"><button class="popup-btn cancel">Cancel</button></a>
+    </div>
+  </div>
+  <div id="cartset10" class="popup">
+    <div class="popup-content">
+      <div style="font-weight:bold;margin-bottom:10px;">Your order is added to cart!</div>
+      <a href="#"><button class="popup-btn">OK</button></a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024 Flower Shop. All rights reserved.</p>
+      <p>
+        <a href="Index About.html">About</a> |
+        <a href="Index Contact us.html">Contact Us</a> |
+        <a href="Available sales.html">Hot Sales</a>
+      </p>
+      <p>
+        Email: <a href="mailto:info@flowershop.com">info@flowershop.com</a> <br>
+        Contact: (123) 456-7890 <br>
+        Address: 123 Blossom Street, Bagasbas City
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
